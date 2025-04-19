@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitungyuk - Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/modern.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            background: #ffffff;
+        }
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+        .auth-tab {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .auth-tab.active {
+            color: #1877f2;
+            font-weight: 600;
+        }
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: #1877f2;
+            border-radius: 3px;
+        }
+        .auth-form {
+            display: none;
+        }
+        .auth-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .form-input {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            background-color: #f3f4f6;
+        }
+        .form-input:focus {
+            border-color: #1877f2;
+            box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.2);
+        }
+        .auth-button {
+            background: #1877f2;
+            transition: all 0.3s ease;
+        }
+        .auth-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        .logo-container {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .logo-image {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        .remember-me-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .remember-me-container input {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body class="font-body">
+    <div class="auth-container flex items-center justify-center p-4">
+        <div class="floating-icons">
+            <div class="floating-icon icon-calculator"></div>
+            <div class="floating-icon icon-helmet"></div>
+            <div class="floating-icon icon-note"></div>
+            <div class="floating-icon icon-pen"></div>
+            <div class="floating-icon icon-star"></div>
+            <div class="floating-icon icon-money"></div>
+            <div class="floating-icon icon-calculator"></div>
+            <div class="floating-icon icon-note"></div>
+            <div class="floating-icon icon-pen"></div>
+            <div class="floating-icon icon-star"></div>
+        </div>
+        <div class="auth-card p-8">
+            <div class="flex flex-col items-center mb-6">
+                <div class="logo-container">
+                    <img src="assets/images/logo/hitungyuk_logo.png" alt="Hitungyuk Logo" class="logo-image">
+                </div>
+                <h1 class="text-2xl font-bold text-gray-800 mb-2">Hitungyuk</h1>
+                <p class="text-gray-600 text-sm">hitung apapun dimanapun</p>
+            </div>
+            
+            <div class="flex justify-center space-x-8 mb-8">
+                <div class="auth-tab active" id="loginTab">Login</div>
+                <div class="auth-tab" id="signupTab">Sign Up</div>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <div class="mb-4">
+                    <label for="loginUsername" class="block text-gray-700 text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="loginUsername" class="form-input w-full px-4 py-3 rounded-lg" placeholder="Masukkan username" required>
+                </div>
+                <div class="mb-4">
+                    <label for="loginPassword" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="form-input w-full px-4 py-3 rounded-lg" placeholder="Masukkan password" required>
+                </div>
+                <div class="remember-me-container">
+                    <input type="checkbox" id="rememberMe" checked>
+                    <label for="rememberMe" class="text-sm text-gray-600">Ingat saya</label>
+                </div>
+                <button type="submit" class="auth-button w-full py-3 text-white font-medium rounded-lg">Login</button>
+                <p class="text-center text-gray-600 text-sm mt-4">Belum punya akun? <span class="text-indigo-600 cursor-pointer" id="switchToSignup">Daftar sekarang</span></p>
+            </form>
+            
+            <!-- Sign Up Form -->
+            <form id="signupForm" class="auth-form">
+                <div class="mb-4">
+                    <label for="signupUsername" class="block text-gray-700 text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="signupUsername" class="form-input w-full px-4 py-3 rounded-lg" placeholder="Buat username" required>
+                </div>
+                <div class="mb-4">
+                    <label for="signupEmail" class="block text-gray-700 text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="signupEmail" class="form-input w-full px-4 py-3 rounded-lg" placeholder="Masukkan email" required>
+                </div>
+                <div class="mb-4">
+                    <label for="signupPassword" class="block text-gray-700 text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="signupPassword" class="form-input w-full px-4 py-3 rounded-lg" placeholder="Buat password" required>
+                </div>
+                <div class="mb-6">
+                    <label for="signupConfirmPassword" class="block text-gray-700 text-sm font-medium mb-2">Konfirmasi Password</label>
+                    <input type="password" id="signupConfirmPassword" class="form-input w-full px-4 py-3 rounded-lg" placeholder="Konfirmasi password" required>
+                </div>
+                <button type="submit" class="auth-button w-full py-3 text-white font-medium rounded-lg">Sign Up</button>
+                <p class="text-center text-gray-600 text-sm mt-4">Sudah punya akun? <span class="text-indigo-600 cursor-pointer" id="switchToLogin">Login</span></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hitungyuk - Custom</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/modern.css">
+</head>
+<body class="bg-white font-body">
+    <!-- Page transition elements will be added by JavaScript -->
+    <div class="container mx-auto px-4 py-6 max-w-md page-content">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-heading font-bold text-primary">Custom</h1>
+            <div class="notification-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+            </div>
+        </header>
+
+        <!-- Project Form -->
+        <section class="mb-8">
+            <div class="card transform-3d">
+                <h2 class="text-lg font-medium mb-4">Informasi Proyek</h2>
+                <form id="projectForm">
+                    <div class="form-group mb-4 input-focus-effect">
+                        <label for="projectName" class="form-label">Nama Proyek</label>
+                        <input type="text" id="projectName" class="form-control" placeholder="Masukkan nama proyek" required>
+                    </div>
+                    <div class="form-group mb-4 input-focus-effect">
+                        <label for="projectAddress" class="form-label">Alamat Proyek</label>
+                        <textarea id="projectAddress" class="form-control" rows="3" placeholder="Masukkan alamat lengkap proyek" required></textarea>
+                    </div>
+                    <button type="button" id="saveProjectBtn" class="btn-primary w-full btn-hover-effect">Simpan Proyek</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Worker Form -->
+        <section class="mb-8">
+            <div class="card transform-3d">
+                <h2 class="text-lg font-medium mb-4">Tambah Pekerja</h2>
+                <form id="workerForm">
+                    <div class="form-group mb-4 input-focus-effect">
+                        <label for="selectProject" class="form-label">Pilih Proyek</label>
+                        <select id="selectProject" class="form-control" required>
+                            <option value="">-- Pilih Proyek --</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group mb-4 input-focus-effect">
+                        <label for="workerName" class="form-label">Nama Pekerja</label>
+                        <input type="text" id="workerName" class="form-control" placeholder="Masukkan nama pekerja" required>
+                    </div>
+                    <div class="form-group mb-4 input-focus-effect">
+                        <label for="workerPosition" class="form-label">Posisi Kerja</label>
+                        <select id="workerPosition" class="form-control" onchange="toggleCustomPosition()" required>
+                            <option value="">-- Pilih Posisi --</option>
+                            <option value="tukang">Tukang</option>
+                            <option value="buruh">Buruh</option>
+                            <option value="mandor">Mandor</option>
+                            <option value="manager">Manager</option>
+                            <option value="custom">Masukkan sendiri</option>
+                        </select>
+                    </div>
+                    <div id="customPositionField" class="form-group mb-4 hidden input-focus-effect">
+                        <label for="customPosition" class="form-label">Posisi Kerja Kustom</label>
+                        <input type="text" id="customPosition" class="form-control" placeholder="Masukkan posisi kerja">
+                    </div>
+                    <div class="form-group mb-4 input-focus-effect">
+                        <label for="dailySalary" class="form-label">Gaji Harian (Rp)</label>
+                        <input type="number" id="dailySalary" class="form-control" placeholder="Masukkan gaji harian" required>
+                    </div>
+                    <div class="form-group mb-4 input-focus-effect">
+                        <label for="workDays" class="form-label">Jumlah Hari Kerja</label>
+                        <input type="number" id="workDays" class="form-control" placeholder="Masukkan jumlah hari kerja" required>
+                    </div>
+                    <button type="button" id="saveWorkerBtn" class="btn-primary w-full btn-hover-effect">Tambah Pekerja</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Workers List -->
+        <section class="mb-8">
+            <div class="card">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-medium">Daftar Pekerja</h2>
+                    <select id="filterProject" class="form-control text-sm py-1 px-3">
+                        <option value="all">Semua Proyek</option>
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div id="workersList" class="space-y-3 bg-gray-50 p-4 rounded-lg border border-gray-200">
+                    <!-- Workers will be populated by JavaScript -->
+                    <p class="text-gray-500 text-center py-4">Belum ada data pekerja</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Bar -->
+        <nav class="fixed bottom-0 left-0 right-0 py-3 z-50">
+            <div class="container mx-auto max-w-md px-2">
+                <div class="flex justify-around items-center">
+                    <a href="index.html" class="nav-link">
+                        <div class="nav-icon-container nav-dashboard">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                        </div>
+                        <span class="text-xs mt-1">Dashboard</span>
+                    </a>
+                    <a href="custom.html" class="nav-link active">
+                        <div class="nav-icon-container nav-custom">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs mt-1">Custom</span>
+                    </a>
+                    <a href="kalkulator.html" class="nav-link">
+                        <div class="nav-icon-container nav-kalkulator">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs mt-1">Kalkulator</span>
+                    </a>
+                    <a href="pusat-data.html" class="nav-link">
+                        <div class="nav-icon-container nav-pusat-data">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+                            </svg>
+                        </div>
+                        <span class="text-xs mt-1">Pusat Data</span>
+                    </a>
+                    <a href="profil.html" class="nav-link">
+                        <div class="nav-icon-container nav-profil">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-7 md:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                        </div>
+                        <span class="text-xs mt-1">Profil</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <script src="js/transitions.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/custom.js"></script>
+<footer-btn></footer-btn>
+
+
+<script
+			defer
+			data-domain="manus.space"
+			src="https://plausible.io/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js"
+		></script>
+		<script>
+			window.plausible =
+				window.plausible ||
+				function () {
+					(window.plausible.q = window.plausible.q || []).push(arguments);
+				};
+			plausible('custom-pageview', {
+			  props: {
+    			domain: window.location.host
+  			}
+			})
+		</script></body>
+</html>
